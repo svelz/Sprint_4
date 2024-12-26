@@ -1,16 +1,16 @@
-package samokatTest;
+package samokattest;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import pageObjects.main;
-import pageObjects.order;
+import pageobjects.mainSamokat;
+import pageobjects.orderSamokat;
 import org.hamcrest.MatcherAssert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.WebDriver;
 
 import static org.hamcrest.CoreMatchers.containsString;
 
@@ -25,7 +25,8 @@ public class orderCheck {
     private final String name, surname, address, metro, phone, date, term, color, comment;
     // Сообщение об успешном оформлении заказа
     private final String expectedOrderSuccessText = "Заказ оформлен";
-    // Контруктор класса
+
+    // Конструктор класса
     public orderCheck(
             String name,
             String surname,
@@ -47,74 +48,81 @@ public class orderCheck {
         this.color = color;
         this.comment = comment;
     }
+
     // Параметры для запуска теста
-    @Parameterized.Parameters(name = "Оформление заказа. Позитивный сценарий. Пользователь: {0} {1}")
+    @Parameterized.Parameters
     public static Object[][] setDataForOrder() {
         return new Object[][] {
-                {"Данил", "Тестовый", "г. СПБ,  ул. Невский-проспект, д. 52", "Черкизовская", "1111111111111", "02.12.2024", "семеро суток", "чёрный жемчуг", "Завелось?"},
-                {"Даниил", "Рестовый", "г. СПБ,  ул. Невский-проспект, д. 52 стр 1", "Комсомольская", "1111111111112", "03.12.2024", "семеро суток", "серая безысходность", "А сейчас?"},
+                {"Данил", "Тестовый", "г. СПБ, ул. Невский-проспект, д. 52", "Черкизовская", "1111111111111", "02.12.2024", "семеро суток", "чёрный жемчуг", "Завелось?"},
+                {"Даниил", "Рестовый", "г. СПБ, ул. Невский-проспект, д. 52 стр 1", "Комсомольская", "1111111111112", "03.12.2024", "семеро суток", "серая безысходность", "А сейчас?"},
         };
     }
+
     @Before
     public void startUp() {
         WebDriverManager.chromedriver().setup();
-        this.webDriver = new ChromeDriver();    // здесь тест падает на подтверждении оформления заказа
+        this.webDriver = new ChromeDriver(); // Здесь тест падает на подтверждении оформления заказа
         this.webDriver.get(mainPageUrl);
     }
+
     @After
     public void tearDown() {
-        this.webDriver.quit();
+        if (this.webDriver != null) {
+            this.webDriver.quit();
+        }
     }
+
     // Тест для проверки процесса оформления заказа после нажатия на кнопку "Заказать" в шапке
     @Test
     public void orderWithHeaderButtonWhenSuccess() {
-        main main = new main(this.webDriver);
-        order order = new order(this.webDriver);
+        mainSamokat mainPage = new mainSamokat(this.webDriver);
+        orderSamokat orderPage = new orderSamokat(this.webDriver);
 
-        main.clickOnCookieAcceptButton();
-        main.clickOrderButtonHeader();
-        makeOrder(order);
+        mainPage.clickOnCookieAcceptButton();
+        mainPage.clickOrderButtonHeader();
+        makeOrder(orderPage);
 
         MatcherAssert.assertThat(
                 "Problem with creating a new order",
-                order.getNewOrderSuccessMessage(),
+                orderPage.getNewOrderSuccessMessage(),
                 containsString(this.expectedOrderSuccessText)
         );
     }
+
     // Тест для проверки процесса оформления заказа после нажатия на кнопку "Заказать" в теле сайта
     @Test
     public void orderWithBodyButtonWhenSuccess() {
-        main main = new main(this.webDriver);
-        order order = new order(this.webDriver);
+        mainSamokat mainPage = new mainSamokat(this.webDriver);
+        orderSamokat orderPage = new orderSamokat(this.webDriver);
 
-        main.clickOnCookieAcceptButton();
-        main.clickOrderButtonBody();
-        makeOrder(order);
+        mainPage.clickOnCookieAcceptButton();
+        mainPage.clickOrderButtonBody();
+        makeOrder(orderPage);
 
         MatcherAssert.assertThat(
                 "Problem with creating a new order",
-                order.getNewOrderSuccessMessage(),
+                orderPage.getNewOrderSuccessMessage(),
                 containsString(this.expectedOrderSuccessText)
         );
     }
 
     // Метод, описывающий процедуру оформления заказа
-    private void makeOrder(order order) {
-        order.waitForLoadForm();
+    private void makeOrder(orderSamokat orderPage) {
+        orderPage.waitForLoadForm();
 
-        order.setName(this.name);
-        order.setSurname(this.surname);
-        order.setAddress(this.address);
-        order.setMetro(this.metro);
-        order.setPhone(this.phone);
+        orderPage.setName(this.name);
+        orderPage.setSurname(this.surname);
+        orderPage.setAddress(this.address);
+        orderPage.setMetro(this.metro);
+        orderPage.setPhone(this.phone);
 
-        order.clickNextButton();
+        orderPage.clickNextButton();
 
-        order.setDate(this.date);
-        order.setTerm(this.term);
-        order.setColor(this.color);
-        order.setComment(this.comment);
+        orderPage.setDate(this.date);
+        orderPage.setTerm(this.term);
+        orderPage.setColor(this.color);
+        orderPage.setComment(this.comment);
 
-        order.makeOrder();
+        orderPage.makeOrder();
     }
 }

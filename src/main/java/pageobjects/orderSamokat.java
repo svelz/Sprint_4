@@ -1,4 +1,4 @@
-package pageObjects;
+package pageobjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
-public class order {
+public class orderSamokat {
     // Вебдрайвер
     private final WebDriver webDriver;
     // Форма заказа
@@ -49,7 +49,7 @@ public class order {
     private final By newOrderSuccessMessage = By.xpath(".//div[starts-with(@class, 'Order_Modal')]//div[(starts-with(@class,'Order_ModalHeader'))]");
 
     // Конструктор класса order
-    public order(WebDriver webDriver) {
+    public orderSamokat(WebDriver webDriver) {
         this.webDriver = webDriver;
     }
     // Метод ожидания загрузки формы заказа

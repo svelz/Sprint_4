@@ -1,7 +1,7 @@
-package samokatTest;
+package samokattest;
 
-import pageObjects.main;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.hamcrest.MatcherAssert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.hamcrest.MatcherAssert;
+import pageobjects.mainSamokat;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.fail;
@@ -67,19 +67,19 @@ public class samokatTextCheck {
     // Тест для проверки работы аккордеона и для проверки текста в заголовках и в раскрывающихся блоках
     @Test
     public void checkAccordionIsCorrect() {
-        main mainPage = new main(this.webDriver);
-        mainPage.clickOnCookieAcceptButton();
-        mainPage.clickAccordionHeader(this.numberOfElement);
-        mainPage.waitForLoadItem(this.numberOfElement);
+        mainSamokat mainSamokat = new mainSamokat(this.webDriver);
+        mainSamokat.clickOnCookieAcceptButton();
+        mainSamokat.clickAccordionHeader(this.numberOfElement);
+        mainSamokat.waitForLoadItem(this.numberOfElement);
 
-        if (mainPage.isAccordionItemDisplayed(this.numberOfElement)) {
+        if (mainSamokat.isAccordionItemDisplayed(this.numberOfElement)) {
             MatcherAssert.assertThat("Problems with text in accordion header #" + this.numberOfElement,
                     this.expectedHeaderText,
-                    equalTo(mainPage.getAccordionHeaderText(this.numberOfElement))
+                    equalTo(mainSamokat.getAccordionHeaderText(this.numberOfElement))
             );
             MatcherAssert.assertThat("Problems with text in accordion item #" + this.numberOfElement,
                     this.expectedItemText,
-                    equalTo(mainPage.getAccordionItemText(this.numberOfElement))
+                    equalTo(mainSamokat.getAccordionItemText(this.numberOfElement))
             );
         }
         else {

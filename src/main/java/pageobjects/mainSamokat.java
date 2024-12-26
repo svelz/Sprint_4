@@ -1,11 +1,11 @@
-package pageObjects;
+package pageobjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class main {
+public class mainSamokat {
     // Вебдрайвер
     private final WebDriver webDriver;
     // Заголовок раскрывающегося блока
@@ -20,7 +20,7 @@ public class main {
     private final By cookieAcceptButton = By.id("rcc-confirm-button");
 
     // Конструктор класса Main
-    public main(WebDriver driver) {
+    public mainSamokat(WebDriver driver) {
         this.webDriver = driver;
     }
 
