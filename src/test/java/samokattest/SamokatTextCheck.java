@@ -9,14 +9,14 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import pageobjects.mainSamokat;
+import pageobjects.MainSamokat;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.fail;
 
 // Тест для проверки содержимого раскрывающегося блока "Вопросы о важном"
 @RunWith(Parameterized.class)
-public class samokatTextCheck {
+public class SamokatTextCheck {
     private WebDriver webDriver;
     // URL тестируемой страницы
     private final String mainPageUrl = "https://qa-scooter.praktikum-services.ru";
@@ -26,9 +26,9 @@ public class samokatTextCheck {
     private final String expectedHeaderText;
     // Ожидаемый текст в раскрывающемся блоке элемента аккордеона
     private final String expectedItemText;
-    // Конструктор класса mainAccordionTests
-    // expectedItemText Ожидаемый текст в раскрывающемся блоке элемента аккордеона
-    public samokatTextCheck(int numberOfAccordionItem, String expectedHeaderText, String expectedItemText) {
+
+    // Конструктор класса SamokatTextCheck
+    public SamokatTextCheck(int numberOfAccordionItem, String expectedHeaderText, String expectedItemText) {
         // numberOfAccordionItem Порядковый номер элемента аккордеона
         this.numberOfElement = numberOfAccordionItem;
         // expectedHeaderText Ожидаемый текст в заголовке элемента аккордеона
@@ -67,7 +67,7 @@ public class samokatTextCheck {
     // Тест для проверки работы аккордеона и для проверки текста в заголовках и в раскрывающихся блоках
     @Test
     public void checkAccordionIsCorrect() {
-        mainSamokat mainSamokat = new mainSamokat(this.webDriver);
+        MainSamokat mainSamokat = new MainSamokat(this.webDriver);
         mainSamokat.clickOnCookieAcceptButton();
         mainSamokat.clickAccordionHeader(this.numberOfElement);
         mainSamokat.waitForLoadItem(this.numberOfElement);
@@ -81,8 +81,7 @@ public class samokatTextCheck {
                     this.expectedItemText,
                     equalTo(mainSamokat.getAccordionItemText(this.numberOfElement))
             );
-        }
-        else {
+        } else {
             fail("Accordion header item #" + this.numberOfElement + "didn't load");
         }
     }

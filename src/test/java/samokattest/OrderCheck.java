@@ -3,8 +3,8 @@ package samokattest;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import pageobjects.mainSamokat;
-import pageobjects.orderSamokat;
+import pageobjects.MainSamokat;
+import pageobjects.OrderSamokat;
 import org.hamcrest.MatcherAssert;
 import org.junit.After;
 import org.junit.Before;
@@ -16,7 +16,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 
 // Тест для проверки позитивного сценария оформления заказа
 @RunWith(Parameterized.class)
-public class orderCheck {
+public class OrderCheck {
     // Веб-драйвер
     private WebDriver webDriver;
     // URL страницы
@@ -27,7 +27,7 @@ public class orderCheck {
     private final String expectedOrderSuccessText = "Заказ оформлен";
 
     // Конструктор класса
-    public orderCheck(
+    public OrderCheck(
             String name,
             String surname,
             String address,
@@ -75,8 +75,8 @@ public class orderCheck {
     // Тест для проверки процесса оформления заказа после нажатия на кнопку "Заказать" в шапке
     @Test
     public void orderWithHeaderButtonWhenSuccess() {
-        mainSamokat mainPage = new mainSamokat(this.webDriver);
-        orderSamokat orderPage = new orderSamokat(this.webDriver);
+        MainSamokat mainPage = new MainSamokat(this.webDriver);
+        OrderSamokat orderPage = new OrderSamokat(this.webDriver);
 
         mainPage.clickOnCookieAcceptButton();
         mainPage.clickOrderButtonHeader();
@@ -92,8 +92,8 @@ public class orderCheck {
     // Тест для проверки процесса оформления заказа после нажатия на кнопку "Заказать" в теле сайта
     @Test
     public void orderWithBodyButtonWhenSuccess() {
-        mainSamokat mainPage = new mainSamokat(this.webDriver);
-        orderSamokat orderPage = new orderSamokat(this.webDriver);
+        MainSamokat mainPage = new MainSamokat(this.webDriver);
+        OrderSamokat orderPage = new OrderSamokat(this.webDriver);
 
         mainPage.clickOnCookieAcceptButton();
         mainPage.clickOrderButtonBody();
@@ -107,7 +107,7 @@ public class orderCheck {
     }
 
     // Метод, описывающий процедуру оформления заказа
-    private void makeOrder(orderSamokat orderPage) {
+    private void makeOrder(OrderSamokat orderPage) {
         orderPage.waitForLoadForm();
 
         orderPage.setName(this.name);

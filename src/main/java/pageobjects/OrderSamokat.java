@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
-public class orderSamokat {
+public class OrderSamokat {
     // Вебдрайвер
     private final WebDriver webDriver;
     // Форма заказа
@@ -48,84 +48,101 @@ public class orderSamokat {
     // Текст об успешном оформлении заказа во всплывающем окошке
     private final By newOrderSuccessMessage = By.xpath(".//div[starts-with(@class, 'Order_Modal')]//div[(starts-with(@class,'Order_ModalHeader'))]");
 
-    // Конструктор класса order
-    public orderSamokat(WebDriver webDriver) {
+    // Конструктор класса OrderSamokat
+    public OrderSamokat(WebDriver webDriver) {
         this.webDriver = webDriver;
     }
+
     // Метод ожидания загрузки формы заказа
     public void waitForLoadForm() {
         new WebDriverWait(this.webDriver, 3)
                 .until(ExpectedConditions.visibilityOf(this.webDriver.findElement(this.orderForm)));
     }
+
     // Метод ожидания загрузки elementToLoad
     private void waitForElementLoad(By elementToLoad) {
         new WebDriverWait(this.webDriver, 3)
                 .until(ExpectedConditions.visibilityOf(this.webDriver.findElement(elementToLoad)));
     }
+
     // Метод для установки значения в поле "Имя"
     public void setName(String name) {
         this.webDriver.findElement(this.nameInput).sendKeys(name);
     }
+
     // Метод для установки значения в поле "Фамилия"
     public void setSurname(String surname) {
         this.webDriver.findElement(this.surnameInput).sendKeys(surname);
     }
+
     // Метод для установки значения в поле "Адрес"
     public void setAddress(String address) {
         this.webDriver.findElement(this.addressInput).sendKeys(address);
     }
+
     // Метод для установки значения в поле "Станция метро"
     public void setMetro(String metro) {
         this.webDriver.findElement(this.metroInput).sendKeys(metro);
         this.waitForElementLoad(this.metroList);
         this.chooseElementFromDropdown(this.metroListItems, metro);
     }
+
     // Метод для установки значения в поле "Телефон"
     public void setPhone(String phone) {
         this.webDriver.findElement(this.phoneInput).sendKeys(phone);
     }
+
     // Метод для нажатия на кнопку "Далее" для продолжения оформления заказа
     public void clickNextButton() {
         this.webDriver.findElement(this.nextButton).click();
     }
+
     // Метод для установки значения в поле "Дата"
     public void setDate(String date) {
         this.webDriver.findElement(this.dateInput).sendKeys(date);
         this.waitForElementLoad(this.dateSelected);
         this.clickDateSelected();
     }
+
     // Метод для установки значения в поле "Срочность аренды"
     public void setTerm(String termToChoose) {
         this.clickTermDropdown();
         this.chooseElementFromDropdown(this.termDropdownOption, termToChoose);
     }
+
     // Метод для установки значения в поле "Цвет"
     public void setColor(String colorToChoose) {
         this.chooseElementFromDropdown(this.colorLabels, colorToChoose);
     }
+
     // Метод для установки значения в поле "Комментарий"
     public void setComment(String comment) {
         this.webDriver.findElement(this.commentInput).sendKeys(comment);
     }
+
     // Метод для оформления заказа
     public void makeOrder() {
         this.clickOrderButton();
         this.waitForElementLoad(this.acceptOrderButton);
         this.clickAcceptOrderButton();
     }
+
     // Метод для получения сообщения об успешном оформлении заказа
     public String getNewOrderSuccessMessage() {
         return this.webDriver.findElement(this.newOrderSuccessMessage).getText();
     }
+
     // Метод для нажатия на кнопку "Заказать"
     private void clickOrderButton() {
         this.webDriver.findElement(this.orderButton).click();
     }
+
     // Метод для нажатия на кнопку подтверждения заказа
     private void clickAcceptOrderButton() {
         this.webDriver.findElement(this.acceptOrderButton).click();
     }
-    // Методя для выбора элемента выпадающего списка
+
+    // Метод для выбора элемента выпадающего списка
     private void chooseElementFromDropdown(By dropdownElements, String elementToChoose) {
         List<WebElement> elementsFiltered = this.webDriver.findElements(dropdownElements);
         for (WebElement element : elementsFiltered) {
@@ -135,11 +152,13 @@ public class orderSamokat {
             }
         }
     }
+
     // Метод для нажатия на выбранную дату в календарике
     private void clickDateSelected() {
         this.webDriver.findElement(this.dateSelected).click();
     }
-    // Метод для ракрытия списка срочностей аренды
+
+    // Метод для раскрытия списка срочностей аренды
     private void clickTermDropdown() {
         this.webDriver.findElement(this.termDropdownRoot).click();
     }

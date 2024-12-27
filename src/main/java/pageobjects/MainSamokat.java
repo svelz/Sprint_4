@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class mainSamokat {
+public class MainSamokat {
     // Вебдрайвер
     private final WebDriver webDriver;
     // Заголовок раскрывающегося блока
@@ -19,8 +19,8 @@ public class mainSamokat {
     // Кнопка "Принять куки"
     private final By cookieAcceptButton = By.id("rcc-confirm-button");
 
-    // Конструктор класса Main
-    public mainSamokat(WebDriver driver) {
+    // Конструктор класса MainSamokat
+    public MainSamokat(WebDriver driver) {
         this.webDriver = driver;
     }
 
@@ -40,7 +40,7 @@ public class mainSamokat {
         return this.webDriver.findElements(this.accordionHeaders).get(index).getText();
     }
 
-    // Методя для получения текста из раскрывающегося блока
+    // Метод для получения текста из раскрывающегося блока
     public String getAccordionItemText(int index) {
         return this.webDriver.findElements(this.accordionItems).get(index).getText();
     }
